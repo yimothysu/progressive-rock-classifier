@@ -46,8 +46,8 @@ def process_audio_files(input_folder, output_folder, sr=11025):
             except Exception as e:
                 print(f"Error processing {file}: {e}")
 
-input_folders = ["data/Progressive_Rock_Songs"]
-#input_folders = ["data/Not_Progressive_Rock", "data/Progressive_Rock_Songs"]
+#input_folders = ["data/Progressive_Rock_Songs"]
+input_folders = ["data/Not_Progressive_Rock", "data/Progressive_Rock_Songs"]
 output_folder = "data_preprocessing"
 
 for folder in input_folders:
