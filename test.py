@@ -1,5 +1,5 @@
 import torch
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader
 
 from tqdm import tqdm
 
@@ -14,15 +14,8 @@ model.eval()
 
 TRAIN_SIZE = 0.8
 
-dataset = MusicDataset("features", "MFCC")
-num_train_instances = int(TRAIN_SIZE * len(dataset))
-num_val_instances = len(dataset) - num_train_instances
-train_set, val_set = random_split(
-    dataset,
-    [num_train_instances, num_val_instances],
-)
-
-val_dl = DataLoader(val_set, shuffle=False)
+val_ds = MusicDataset("features/valid", "Mel-Spectrogram")
+val_dl = DataLoader(val_ds, shuffle=False)
 
 correct = 0
 total = 0

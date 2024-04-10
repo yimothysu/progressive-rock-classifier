@@ -16,7 +16,7 @@ class MusicDataset(Dataset):
 
         # Load the data
         # For each file in the directory
-        for i, dir2 in enumerate(["non_prog_rock_features", "prog_rock_features"]):
+        for i, dir2 in enumerate(["non_prog_rock", "prog_rock"]):
             for file in tqdm(os.listdir(os.path.join(dir, dir2, feature_type))):
                 feature = (
                     torch.from_numpy(
