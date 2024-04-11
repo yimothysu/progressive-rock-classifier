@@ -8,10 +8,10 @@ from dataset import MusicDataset
 
 torch.manual_seed(0)
 
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 # Proportion of data to use for training. The remaining data will be used for validation.
 LEARNING_RATE = 1e-4
-NUM_EPOCHS = 50
+NUM_EPOCHS = 70
 
 train_ds = MusicDataset("features/train", "Mel-Spectrogram")
 val_ds = MusicDataset("features/valid", "Mel-Spectrogram")
