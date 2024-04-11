@@ -4,7 +4,8 @@ from torch.utils.data import DataLoader
 
 from tqdm import tqdm
 
-from dataset import MusicDataset
+from dataset import SnippetDataset
+from model import Model
 
 torch.manual_seed(0)
 
@@ -13,17 +14,13 @@ BATCH_SIZE = 64
 LEARNING_RATE = 1e-4
 NUM_EPOCHS = 70
 
-train_ds = MusicDataset("features/train", "Mel-Spectrogram")
-val_ds = MusicDataset("features/valid", "Mel-Spectrogram")
+train_ds = SnippetDataset("features/train", "Mel-Spectrogram")
+val_ds = SnippetDataset("features/valid", "Mel-Spectrogram")
 
 train_dl = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
 val_dl = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False)
 
-model = torch.hub.load("pytorch/vision:v0.10.0", "resnet50", pretrained=True)
-model.conv1 = nn.Conv2d(
-    1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False
-)
-model.fc = torch.nn.Linear(model.fc.in_features, 1)
+model = Model()
 
 loss_fn = nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)

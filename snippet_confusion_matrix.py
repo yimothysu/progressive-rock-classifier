@@ -5,12 +5,12 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from dataset import MusicDataset
+from model import Model
 
 torch.manual_seed(0)
 
 
-model = torch.load("model.pt")
-
+model = Model("model.pt")
 model.eval()
 
 TRAIN_SIZE = 0.8
@@ -38,7 +38,7 @@ with torch.no_grad():
 
 confusion_matrix = torch.tensor([[TP, FP], [FN, TN]]).to(dtype=torch.long)
 ax = sn.heatmap(confusion_matrix, annot=True, fmt="d")
-ax.set_title("Confusion Matrix")
+ax.set_title("Snippet Confusion Matrix")
 ax.xaxis.set_ticklabels(["Progressive Rock", "Not Progressive Rock"])
 ax.yaxis.set_ticklabels(["Progressive Rock", "Not Progressive Rock"])
 ax.set_xlabel("Predicted")
