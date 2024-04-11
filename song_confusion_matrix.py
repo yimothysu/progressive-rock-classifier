@@ -35,7 +35,7 @@ with torch.no_grad():
         correct += int(y_pred == y)
         total += 1
 
-confusion_matrix = torch.tensor([[TP, FP], [FN, TN]]).to(dtype=torch.long)
+confusion_matrix = torch.tensor([[TP, FN], [FP, TN]]).to(dtype=torch.long)
 ax = sn.heatmap(confusion_matrix, annot=True, fmt="d")
 ax.set_title("Song Confusion Matrix")
 ax.xaxis.set_ticklabels(["Progressive Rock", "Not Progressive Rock"])

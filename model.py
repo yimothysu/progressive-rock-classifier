@@ -9,7 +9,7 @@ class Model(nn.Module):
             self.model = torch.load(path)
         else:
             model = torch.hub.load(
-                "pytorch/vision:v0.10.0", "resnet50", pretrained=True
+                "pytorch/vision:v0.10.0", "resnet18", pretrained=True
             )
             model.conv1 = nn.Conv2d(
                 1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False

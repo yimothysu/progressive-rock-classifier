@@ -1,18 +1,19 @@
+from matplotlib import pyplot as plt
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-
 from tqdm import tqdm
 
 from dataset import SnippetDataset
 from model import Model
 
 torch.manual_seed(0)
+torch.cuda.manual_seed(0)
 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 # Proportion of data to use for training. The remaining data will be used for validation.
 LEARNING_RATE = 1e-4
-NUM_EPOCHS = 70
+NUM_EPOCHS = 3
 
 train_ds = SnippetDataset("features/train", "Mel-Spectrogram")
 val_ds = SnippetDataset("features/valid", "Mel-Spectrogram")
@@ -26,6 +27,8 @@ loss_fn = nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 model.to("cuda")
 
+train_losses = []
+val_losses = []
 for epoch in range(NUM_EPOCHS):
     model.train()
     train_loss = 0
@@ -38,6 +41,7 @@ for epoch in range(NUM_EPOCHS):
 
         train_loss += loss.item()
     train_loss /= len(train_dl)
+    train_losses.append(train_loss)
     print(f"Epoch {epoch + 1}, train loss: {train_loss}")
 
     model.eval()
@@ -46,5 +50,15 @@ for epoch in range(NUM_EPOCHS):
             loss_fn(model(X), y.unsqueeze(1).float()) for X, y in val_dl
         ) / len(val_dl)
 
+    val_losses.append(val_loss.item())
     print(f"Epoch {epoch + 1}, val loss: {val_loss.item()}")
 torch.save(model, "model.pt")
+
+print(train_losses)
+print(val_losses)
+plt.plot(list(range(len(train_losses))), train_losses, label="train loss")
+plt.plot(list(range(len(val_losses))), val_losses, label="val loss")
+plt.ylabel("Loss")
+plt.xlabel("Epoch")
+plt.legend()
+plt.show()
