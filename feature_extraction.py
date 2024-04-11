@@ -19,9 +19,11 @@ def feature_extraction(input_folder, output_folder):
 
     # Initiating for loop to iterate through every single snippet
     for root, dirs, files in os.walk(input_folder):
-        
+ 
         sub_subfolder = "non_prog_rock" if "non_prog_rock" in root else "prog_rock"
-        true_subfolder = f'{subfolder}/{sub_subfolder}'
+        song = os.path.basename(root)
+        true_subfolder = f'{subfolder}/{sub_subfolder}/{song}'
+
         for filename in tqdm(files):
 
             # Creating path which is then used to load in the snippet through librosa
