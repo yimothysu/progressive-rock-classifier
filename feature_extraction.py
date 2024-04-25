@@ -12,24 +12,27 @@ def feature_extraction(input_folder, output_folder):
 
     # Choosing which subfolder the features will go to depending on the folder opened
 
-    # if input_folder == "processed_data/train":
-    #     subfolder = "train"
-    # else:
-    #     subfolder = "valid"
+    if "train" in input_folder:
+        subfolder = "train"
 
+    elif "valid" in input_folder:
+        subfolder = "valid"
+    
+    elif 'test' in input_folder:
+        subfolder = "test"
 
     # Initiating for loop to iterate through every single snippet
     for root, dirs, files in os.walk(input_folder):
  
-        #sub_subfolder = "non_prog_rock" if "non_prog_rock" in root elif "prog_rock"
         if 'non_prog_rock' in root:
-            subfolder = 'non_prog_rock'
+            sub_subfolder = 'non_prog_rock'
         elif 'prog_rock' in root:
-            subfolder = 'prog_rock'
+            sub_subfolder = 'prog_rock'
         else:
-            subfolder = 'other'
+            sub_subfolder = 'other'
+            
         song = os.path.basename(root)
-        true_subfolder = f'test/{subfolder}/{song}'
+        true_subfolder = f'{subfolder}/{sub_subfolder}/{song}'
 
         for filename in tqdm(files):
 
@@ -106,8 +109,19 @@ def feature_extraction(input_folder, output_folder):
             # plt.show()
 
 
-input_folders = ["processed_data/test_non_prog_rock", "processed_data/test_prog_rock", "processed_data/test_other"]
+input_folders = ["processed_data/train","processed_data/valid","processed_data/test_non_prog_rock",
+                 "processed_data/test_prog_rock", "processed_data/test_other"]
 output_folder = "features"
 
 for folder in input_folders:
-    feature_extraction(folder, output_folder)
+    if os.path.exists("features/train/non_prog_rock") and os.path.exists("features/train/prog_rock") and "train" in folder:
+        continue
+    
+    elif os.path.exists("features/valid/non_prog_rock") and os.path.exists("features/valid/prog_rock") and "valid" in folder:
+        continue
+
+    elif os.path.exists("features/test/non_prog_rock") and os.path.exists("features/test/prog_rock") and os.path.exists("features/test/other") and "test" in folder:
+        continue
+
+    else:
+        feature_extraction(folder, output_folder)
