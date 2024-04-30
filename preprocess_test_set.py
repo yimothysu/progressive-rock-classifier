@@ -52,7 +52,7 @@ def process_song(song_path, output_folder, sr=11025, set_type='train'):
     except Exception as e:
         print(f"Error processing {file}: {e}")
 
-def main(input_folder, output_folder, sr=11025):
+def main(input_folder, output_folder, sr=22050):
     # Define specific subfolders
     input_folders = [os.path.join(input_folder, "Not_Progressive_Rock"), 
                      os.path.join(input_folder, "Progressive Rock Songs"),

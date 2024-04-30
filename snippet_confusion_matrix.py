@@ -4,7 +4,7 @@ import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from dataset import MusicDataset
+from dataset import SnippetDataset
 from model import Model
 
 torch.manual_seed(0)
@@ -15,7 +15,7 @@ model.eval()
 
 TRAIN_SIZE = 0.8
 
-val_ds = MusicDataset("features/valid", "Mel-Spectrogram")
+val_ds = SnippetDataset("features/test", "Mel-Spectrogram")
 val_dl = DataLoader(val_ds, shuffle=False)
 
 # TP = progressive rock, predicted as progressive rock

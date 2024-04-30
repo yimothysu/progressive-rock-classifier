@@ -15,7 +15,7 @@ model.eval()
 
 TRAIN_SIZE = 0.8
 
-val_ds = SongDataset("features/valid", "Mel-Spectrogram")
+val_ds = SongDataset("features/test", "Mel-Spectrogram")
 val_dl = DataLoader(val_ds, shuffle=False)
 
 # TP = progressive rock, predicted as progressive rock

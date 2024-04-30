@@ -44,7 +44,7 @@ def process_song(song_path, output_folder, sr=11025, set_type='train'):
     except Exception as e:
         print(f"Error processing {file}: {e}")
 
-def main(input_folders, output_folder, sr=11025):
+def main(input_folders, output_folder, sr=22050):
     # Collect all songs and split them
     song_paths = collect_song_paths(input_folders)
     train_songs, valid_songs = split_songs(song_paths)

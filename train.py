@@ -29,6 +29,7 @@ model.to("cuda")
 
 train_losses = []
 val_losses = []
+print(f"Training model for {NUM_EPOCHS} epochs...")
 for epoch in range(NUM_EPOCHS):
     model.train()
     train_loss = 0
@@ -44,14 +45,14 @@ for epoch in range(NUM_EPOCHS):
     train_losses.append(train_loss)
     print(f"Epoch {epoch + 1}, train loss: {train_loss}")
 
-    model.eval()
-    with torch.no_grad():
-        val_loss = sum(
-            loss_fn(model(X), y.unsqueeze(1).float()) for X, y in val_dl
-        ) / len(val_dl)
+    # model.eval()
+    # with torch.no_grad():
+    #     val_loss = sum(
+    #         loss_fn(model(X), y.unsqueeze(1).float()) for X, y in val_dl
+    #     ) / len(val_dl)
 
-    val_losses.append(val_loss.item())
-    print(f"Epoch {epoch + 1}, val loss: {val_loss.item()}")
+    # val_losses.append(val_loss.item())
+    # print(f"Epoch {epoch + 1}, val loss: {val_loss.item()}")
 torch.save(model, "model.pt")
 
 print(train_losses)
